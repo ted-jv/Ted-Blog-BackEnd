@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/join.request.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-  postUsers(email: string, nickname: string, password: string) {}
+  createSignUp(email: string, nickname: string, password: string) {
+    return;
+  }
 
   findAll() {
     return `This action returns all users`;
