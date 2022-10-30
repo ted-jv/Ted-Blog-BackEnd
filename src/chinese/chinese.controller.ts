@@ -1,15 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ChineseService } from './chinese.service';
-import { CreateChineseDto } from './dto/create-chinese.dto';
-import { UpdateChineseDto } from './dto/update-chinese.dto';
+import { Chinese } from './entities/chinese.entity';
 
 @Controller('chinese')
 export class ChineseController {
   constructor(private readonly chineseService: ChineseService) {}
 
   @Post()
-  create(@Body() createChineseDto: CreateChineseDto) {
-    return this.chineseService.create(createChineseDto);
+  create(@Body() chinese: Chinese) {
+    return this.chineseService.create(chinese);
   }
 
   @Get()
@@ -18,14 +17,14 @@ export class ChineseController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.chineseService.findOne(+id);
+  findOne(@Param('id') id: string): string {
+    return `This action returns a #${id} cat`;
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateChineseDto: UpdateChineseDto) {
-    return this.chineseService.update(+id, updateChineseDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateChineseDto: UpdateChineseDto) {
+  //   return this.chineseService.update(+id, updateChineseDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
