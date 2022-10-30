@@ -1,6 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
-import { JoinRequestDtd } from './dto/join.request.dto';
+import { SignUpRequestDtd } from './dto/SignUp.request.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { User } from 'src/common/decorators/user.decorator';
 
@@ -12,12 +22,13 @@ export class UsersController {
   @ApiResponse({ status: 500, description: '에러' })
   @ApiOperation({ summary: '회원가입' })
   @Post() // 회원가입
-  createSignUp(@Body() data: JoinRequestDtd) {
+  @UsePipes(ValidationPipe)
+  createSignUp(@Body() data: SignUpRequestDtd) {
     this.usersService.createSignUp(data.email, data.nickname, data.password);
   }
 
   // @Post() // 로그인
-  // createLogin(@Body() data: JoinRequestDtd) {
+  // createLogin(@Body() data: SignUpRequestDtd) {
   //   return this.usersService.createLogin(data);
   // }
 

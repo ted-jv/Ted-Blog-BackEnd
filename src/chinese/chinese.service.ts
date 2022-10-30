@@ -1,26 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { CreateChineseDto } from './dto/create-chinese.dto';
-import { UpdateChineseDto } from './dto/update-chinese.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Chinese } from './entities/chinese.entity';
 
 @Injectable()
 export class ChineseService {
-  create(createChineseDto: CreateChineseDto) {
-    return 'This action adds a new chinese';
+  constructor(
+    @InjectRepository(Chinese)
+    private chineseRepository: Repository<Chinese>,
+  ) {}
+
+  findAll(): Promise<Chinese[]> {
+    return this.chineseRepository.find();
   }
 
-  findAll() {
-    return `This action returns all chinese`;
+  // findOne(id: string): Promise<Chinese> {
+  //   return this.chineseRepository.findOne(id);
+  // }
+
+  async create(chinese: Chinese): Promise<void> {
+    await this.chineseRepository.save(chinese);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} chinese`;
-  }
-
-  update(id: number, updateChineseDto: UpdateChineseDto) {
-    return `This action updates a #${id} chinese`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} chinese`;
+  async remove(id: number): Promise<void> {
+    await this.chineseRepository.delete(id);
   }
 }
